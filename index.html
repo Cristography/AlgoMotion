@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة احترافية لتصور الخوارزميات وهياكل البيانات بشكل تفاعلي">
+    <title>AlgoMotion - منصة تصور الخوارزميات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%230066FF'/><stop offset='100%25' stop-color='%2300D4AA'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23g)'/><text x='50' y='62' font-size='32' font-weight='bold' fill='white' text-anchor='middle'>AM</text></svg>">
+
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg-animation">
+    <div class="bg-gradient"></div>
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+    <div class="grid-overlay" aria-hidden="true"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" role="navigation" aria-label="القائمة الرئيسية">
+    <div class="nav-container">
+        <a href="#" class="nav-brand" aria-label="AlgoMotion - الصفحة الرئيسية">
+            <div class="brand-icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                    <rect x="2"  y="20" width="8"  height="18" rx="2" fill="currentColor" opacity=".6"/>
+                    <rect x="16" y="10" width="8"  height="28" rx="2" fill="currentColor" opacity=".8"/>
+                    <rect x="30" y="2"  width="8"  height="36" rx="2" fill="currentColor"/>
+                </svg>
+            </div>
+            <span class="brand-text">AlgoMotion</span>
+        </a>
+        <div class="nav-menu" role="menubar">
+            <button class="nav-link active" role="menuitem" data-page="home"    onclick="app.navigate('home')">
+                <span class="nav-icon" aria-hidden="true">🏠</span><span data-i18n="home">الرئيسية</span>
+            </button>
+            <button class="nav-link" role="menuitem" data-page="sorting" onclick="app.navigate('sorting')">
+                <span class="nav-icon" aria-hidden="true">📊</span><span data-i18n="sorting">الترتيب</span>
+            </button>
+            <button class="nav-link" role="menuitem" data-page="trees"   onclick="app.navigate('trees')">
+                <span class="nav-icon" aria-hidden="true">🌳</span><span data-i18n="trees">الأشجار</span>
+            </button>
+            <button class="nav-link lang-toggle" onclick="app.toggleLanguage()" aria-label="تغيير اللغة">
+                <span class="nav-icon" aria-hidden="true">🌐</span><span id="langText">EN</span>
+            </button>
+        </div>
+        <button class="nav-toggle" onclick="app.toggleMobileMenu()" aria-label="فتح القائمة" aria-expanded="false" id="navToggleBtn">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" role="menu">
+    <button class="mobile-link active" role="menuitem" data-page="home"    onclick="app.navigate('home');app.closeMobileMenu()"><span>🏠</span><span data-i18n="home">الرئيسية</span></button>
+    <button class="mobile-link"        role="menuitem" data-page="sorting" onclick="app.navigate('sorting');app.closeMobileMenu()"><span>📊</span><span data-i18n="sorting">الترتيب</span></button>
+    <button class="mobile-link"        role="menuitem" data-page="trees"   onclick="app.navigate('trees');app.closeMobileMenu()"><span>🌳</span><span data-i18n="trees">الأشجار</span></button>
+    <button class="mobile-link"        role="menuitem" onclick="app.toggleLanguage();app.closeMobileMenu()"><span>🌐</span><span id="mobileLangText">English</span></button>
+</div>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+
+    <!-- ══ Home Page ══ -->
+    <section class="page active" id="page-home" role="main">
+        <div class="hero-section">
+            <div class="hero-badge" data-i18n="heroBadge">منصة تعليمية تفاعلية</div>
+            <h1 class="hero-title" data-i18n="heroTitle">تصور الخوارزميات<br>بشكل احترافي</h1>
+            <p class="hero-subtitle" data-i18n="heroSubtitle">استكشف وفهم الخوارزميات وهياكل البيانات من خلال تصورات تفاعلية خطوة بخطوة</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary btn-lg" onclick="app.navigate('sorting')">
+                    <span data-i18n="startExploring">ابدأ الاستكشاف</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <button class="btn btn-outline btn-lg" onclick="app.navigate('trees')">
+                    <span data-i18n="exploreTrees">استكشف الأشجار</span>
+                </button>
+            </div>
+            <div class="hero-stats" aria-label="إحصائيات المنصة">
+                <div class="stat-box"><div class="stat-number">5+</div><div class="stat-label" data-i18n="algorithms">خوارزميات</div></div>
+                <div class="stat-box"><div class="stat-number">2</div><div class="stat-label" data-i18n="dataStructures">هياكل بيانات</div></div>
+                <div class="stat-box"><div class="stat-number">∞</div><div class="stat-label" data-i18n="interactions">تفاعلات</div></div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="features">المميزات</h2>
+                <p class="section-desc" data-i18n="featuresDesc">أدوات متقدمة لفهم الخوارزميات</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                    <h3 data-i18n="realTimeViz">تصور فوري</h3>
+                    <p data-i18n="realTimeVizDesc">شاهد الخوارزميات تعمل في الوقت الحقيقي مع تحكم كامل</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div>
+                    <h3 data-i18n="stepByStep">خطوة بخطوة</h3>
+                    <p data-i18n="stepByStepDesc">تعلم كل خطوة مع شرح مفصل والكود المرجعي</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                    <h3 data-i18n="multiLang">دعم متعدد اللغات</h3>
+                    <p data-i18n="multiLangDesc">واجهة بالعربية والإنجليزية مع دعم كامل للاتجاهين</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+                    <h3 data-i18n="responsive">تصميم متجاوب</h3>
+                    <p data-i18n="responsiveDesc">يعمل بشكل مثالي على جميع الأجهزة والشاشات</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="algorithms-section">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="availableAlgos">الخوارزميات المتاحة</h2>
+                <p class="section-desc" data-i18n="availableAlgosDesc">اختر الخوارزمية التي تريد استكشافها</p>
+            </div>
+            <div class="algo-category">
+                <h3 class="category-title"><span class="category-icon" aria-hidden="true">📊</span><span data-i18n="sortingAlgorithms">خوارزميات الترتيب</span></h3>
+                <div class="algo-cards" id="sortingCards" role="list"></div>
+            </div>
+            <div class="algo-category">
+                <h3 class="category-title"><span class="category-icon" aria-hidden="true">🌳</span><span data-i18n="treeStructures">هياكل البيانات الشجرية</span></h3>
+                <div class="algo-cards" id="treeCards" role="list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ Sorting Page ══ -->
+    <section class="page" id="page-sorting">
+        <div class="page-header">
+            <button class="back-btn" onclick="app.navigate('home')" aria-label="العودة للرئيسية">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="page-info">
+                <h1 class="page-title" id="sortingTitle">Bubble Sort</h1>
+                <p class="page-subtitle" id="sortingSubtitle">خوارزمية الترتيب الفقاعي</p>
+            </div>
+            <div class="page-badges" id="sortingBadges" aria-label="تعقيد الخوارزمية"></div>
+        </div>
+        <div class="sorting-container">
+            <!-- Control -->
+            <div class="control-panel" aria-label="لوحة التحكم">
+                <div class="control-section">
+                    <h3 class="control-title" data-i18n="inputData">إدخال البيانات</h3>
+                    <div class="input-group">
+                        <input type="text" id="sortingInput" class="input-field" placeholder="64, 34, 25, 12, 22, 11, 90"
+                               aria-label="أرقام مفصولة بفاصلة">
+                        <label class="input-label" data-i18n="inputPlaceholder">أرقام مفصولة بفاصلة</label>
+                    </div>
+                    <div class="control-row">
+                        <div class="input-group small">
+                            <input type="number" id="arraySize" class="input-field" value="15" min="3" max="50" aria-label="حجم المصفوفة">
+                            <label class="input-label" data-i18n="arraySize">حجم المصفوفة</label>
+                        </div>
+                        <button class="btn btn-secondary" onclick="app.generateRandomArray()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            <span data-i18n="generate">توليد عشوائي</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="control-section">
+                    <button class="btn btn-primary btn-block" id="startSortingBtn" onclick="app.startSorting()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <span data-i18n="startVisualization">بدء التصور</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visualization -->
+            <div class="viz-container">
+                <div class="viz-header">
+                    <div class="viz-title" data-i18n="arrayVisualization">تصور المصفوفة</div>
+                    <div class="viz-legend" id="sortingLegend" aria-label="مفتاح الألوان"></div>
+                </div>
+                <div class="viz-area" id="sortingVizArea" role="img" aria-label="تصور المصفوفة">
+                    <div class="bars-container" id="barsContainer">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                            <p data-i18n="enterDataToStart">أدخل البيانات للبدء</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="viz-controls" role="toolbar" aria-label="أدوات التحكم">
+                    <button class="ctrl-btn" onclick="app.resetSorting()" aria-label="إعادة تعيين">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </button>
+                    <button class="ctrl-btn" id="prevStepBtn" onclick="app.prevStep()" disabled aria-label="الخطوة السابقة">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+                    </button>
+                    <button class="ctrl-btn ctrl-play" id="playPauseBtn" onclick="app.togglePlay()" disabled aria-label="تشغيل/إيقاف">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="playIcon" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </button>
+                    <button class="ctrl-btn" id="nextStepBtn" onclick="app.nextStep()" disabled aria-label="الخطوة التالية">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                    </button>
+                    <div class="speed-control" aria-label="التحكم في السرعة">
+                        <span class="speed-label" aria-hidden="true">🐢</span>
+                        <input type="range" class="speed-slider" id="speedSlider" min="1" max="10" value="5" aria-label="سرعة التشغيل">
+                        <span class="speed-label" aria-hidden="true">🐇</span>
+                    </div>
+                    <div class="step-display" id="stepDisplay" aria-live="polite">0 / 0</div>
+                </div>
+            </div>
+
+            <!-- Info -->
+            <div class="info-panel">
+                <div class="info-section">
+                    <div class="info-header"><span class="info-icon" aria-hidden="true">📝</span><span data-i18n="pseudoCode">الكود المرجعي</span></div>
+                    <div class="code-block" id="pseudoCode" role="code" aria-label="الكود المرجعي"></div>
+                </div>
+                <div class="info-section">
+                    <div class="info-header"><span class="info-icon" aria-hidden="true">💡</span><span data-i18n="currentStepInfo">الخطوة الحالية</span></div>
+                    <div class="explanation-box" id="stepExplanation" aria-live="polite">
+                        <p data-i18n="clickStartToSee">اضغط "بدء التصور" لرؤية الخوارزمية</p>
+                    </div>
+                </div>
+                <div class="info-section stats-section">
+                    <div class="info-header"><span class="info-icon" aria-hidden="true">📊</span><span data-i18n="statistics">الإحصائيات</span></div>
+                    <div class="stats-grid">
+                        <div class="stat-item"><div class="stat-value" id="statComparisons">0</div><div class="stat-label" data-i18n="comparisons">مقارنات</div></div>
+                        <div class="stat-item"><div class="stat-value" id="statSwaps">0</div><div class="stat-label" data-i18n="swaps">تبديلات</div></div>
+                        <div class="stat-item"><div class="stat-value" id="statSteps">0</div><div class="stat-label" data-i18n="steps">خطوات</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ Trees Page ══ -->
+    <section class="page" id="page-trees">
+        <div class="page-header">
+            <button class="back-btn" onclick="app.navigate('home')" aria-label="العودة للرئيسية">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="page-info">
+                <h1 class="page-title" id="treeTitle">Binary Search Tree</h1>
+                <p class="page-subtitle" id="treeSubtitle">شجرة البحث الثنائية</p>
+            </div>
+            <div class="page-badges" id="treeBadges" aria-label="تعقيد العملية"></div>
+        </div>
+        <div class="tree-container">
+            <!-- Tree Control -->
+            <div class="tree-control-panel" aria-label="لوحة تحكم الشجرة">
+                <div class="control-section">
+                    <h3 class="control-title" data-i18n="treeOperations">عمليات الشجرة</h3>
+                    <div class="operation-group">
+                        <label class="operation-label" for="insertInput" data-i18n="insertValue">إدراج قيمة</label>
+                        <div class="operation-row">
+                            <input type="text" id="insertInput" class="input-field" placeholder="50, 30, 70, 20" aria-label="قيم للإدراج">
+                            <button class="btn btn-success" onclick="app.insertNode()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                                <span data-i18n="insert">إدراج</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="operation-group">
+                        <label class="operation-label" for="searchInput" data-i18n="searchValue">بحث عن قيمة</label>
+                        <div class="operation-row">
+                            <input type="number" id="searchInput" class="input-field" placeholder="40" aria-label="قيمة للبحث">
+                            <button class="btn btn-primary" onclick="app.searchNode()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                <span data-i18n="search">بحث</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="operation-group">
+                        <label class="operation-label" for="deleteInput" data-i18n="deleteValue">حذف قيمة</label>
+                        <div class="operation-row">
+                            <input type="number" id="deleteInput" class="input-field" placeholder="30" aria-label="قيمة للحذف">
+                            <button class="btn btn-danger" onclick="app.deleteNode()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                <span data-i18n="delete">حذف</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-block" onclick="app.clearTree()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        <span data-i18n="clearTree">مسح الشجرة</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tree Viz -->
+            <div class="tree-viz-container">
+                <div class="viz-header">
+                    <div class="viz-title" data-i18n="treeVisualization">تصور الشجرة</div>
+                    <div class="viz-legend" id="treeLegend" aria-label="مفتاح الألوان"></div>
+                </div>
+                <div class="tree-viz-area">
+                    <div class="tree-canvas" id="treeCanvas" role="img" aria-label="تصور الشجرة">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M12 22c4.97 0 9-2.24 9-5V7c0-2.76-4.03-5-9-5S3 4.24 3 7v10c0 2.76 4.03 5 9 5z"/></svg>
+                            <p data-i18n="insertToBuild">أدخل قيمًا لبناء الشجرة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="viz-controls" role="toolbar" aria-label="أدوات التحكم">
+                    <button class="ctrl-btn" onclick="app.resetTree()" aria-label="إعادة تعيين">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </button>
+                    <button class="ctrl-btn" id="treePrevBtn" onclick="app.treePrevStep()" disabled aria-label="الخطوة السابقة">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+                    </button>
+                    <button class="ctrl-btn ctrl-play" id="treePlayBtn" onclick="app.toggleTreePlay()" disabled aria-label="تشغيل/إيقاف">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </button>
+                    <button class="ctrl-btn" id="treeNextBtn" onclick="app.treeNextStep()" disabled aria-label="الخطوة التالية">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                    </button>
+                    <div class="speed-control" aria-label="التحكم في السرعة">
+                        <span class="speed-label" aria-hidden="true">🐢</span>
+                        <input type="range" class="speed-slider" id="treeSpeedSlider" min="1" max="10" value="5" aria-label="سرعة التشغيل">
+                        <span class="speed-label" aria-hidden="true">🐇</span>
+                    </div>
+                    <div class="step-display" id="treeStepDisplay" aria-live="polite">0 / 0</div>
+                </div>
+            </div>
+
+            <!-- Tree Info -->
+            <div class="info-panel">
+                <div class="info-section">
+                    <div class="info-header"><span class="info-icon" aria-hidden="true">📝</span><span data-i18n="pseudoCode">الكود المرجعي</span></div>
+                    <div class="code-block" id="treePseudoCode" role="code" aria-label="الكود المرجعي"></div>
+                </div>
+                <div class="info-section">
+                    <div class="info-header"><span class="info-icon" aria-hidden="true">💡</span><span data-i18n="currentStepInfo">الخطوة الحالية</span></div>
+                    <div class="explanation-box" id="treeStepExplanation" aria-live="polite">
+                        <p data-i18n="performOperation">نفّذ عملية لرؤية الشرح</p>
+                    </div>
+                </div>
+                <div class="info-section stats-section">
+                    <div class="info-header"><span class="info-icon" aria-hidden="true">📊</span><span data-i18n="treeStats">إحصائيات الشجرة</span></div>
+                    <div class="stats-grid stats-grid-4">
+                        <div class="stat-item"><div class="stat-value" id="treeStatNodes">0</div><div class="stat-label" data-i18n="nodes">عقد</div></div>
+                        <div class="stat-item"><div class="stat-value" id="treeStatDepth">0</div><div class="stat-label" data-i18n="depth">العمق</div></div>
+                        <div class="stat-item"><div class="stat-value" id="treeStatComparisons">0</div><div class="stat-label" data-i18n="comparisons">مقارنات</div></div>
+                        <div class="stat-item"><div class="stat-value" id="treeStatSteps">0</div><div class="stat-label" data-i18n="steps">خطوات</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+   <script src="script.js"></script>
+
+</body>
+</html>
